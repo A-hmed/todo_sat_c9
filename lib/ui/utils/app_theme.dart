@@ -9,7 +9,7 @@ abstract class AppTheme{
       fontSize: 22, color: AppColors.primiary);
   static const TextStyle taskDescriptionTextStyle = TextStyle(fontWeight: FontWeight.normal,
       fontSize: 14, color: AppColors.lightBlack);
-  static const TextStyle bottomSheetTitleTextStyle = TextStyle(fontWeight: FontWeight.normal,
+  static const TextStyle bottomSheetTitleTextStyle = TextStyle(fontWeight: FontWeight.bold,
       fontSize: 20, color: AppColors.black);
 
   static ThemeData lightTheme = ThemeData(
@@ -28,6 +28,11 @@ abstract class AppTheme{
       unselectedItemColor: AppColors.grey
     ),
     scaffoldBackgroundColor: AppColors.accent,
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      shape: StadiumBorder(
+        side: BorderSide(color: AppColors.white, width: 4),
+      ),
+    )
   );
   static ThemeData darkTheme =  ThemeData();
 }
