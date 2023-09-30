@@ -1,11 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_sat_c9/model/todo_dm.dart';
+import 'package:todo_sat_c9/providers/list_provider.dart';
 import 'package:todo_sat_c9/ui/utils/app_colors.dart';
 import 'package:todo_sat_c9/ui/utils/app_theme.dart';
 
 class TodoWidget extends StatelessWidget {
+  TodoDM item;
+  TodoWidget(this.item);
+  late ListProvider provider;
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of(context);
     return Container(
       margin: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -17,7 +25,12 @@ class TodoWidget extends StatelessWidget {
           children: [
             // A SlidableAction can have an icon and/or a label.
             SlidableAction(
-              onPressed: (_) {},
+              onPressed: (_) {
+                TodoDM.getCollection().doc(item.id).delete().timeout(Duration(milliseconds: 300),
+                    onTimeout: (){
+                      provider.getTodosFromFirestore();
+                    });
+              },
               backgroundColor: Color(0xFFFE4A49),
               foregroundColor: Colors.white,
               icon: Icons.delete,
@@ -41,20 +54,20 @@ class TodoWidget extends StatelessWidget {
               SizedBox(
                 width: 25,
               ),
-              const Expanded(
+               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Play basketball",
+                      item.title,
                       style: AppTheme.taskTitleTextStyle,
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     Text(
-                      "Description ",
+                      item.description,
                       textAlign: TextAlign.start,
                       style: AppTheme.taskDescriptionTextStyle,
                     )

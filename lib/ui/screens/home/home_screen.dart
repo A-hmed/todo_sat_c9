@@ -1,6 +1,8 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_sat_c9/ui/bottom_sheets/add_bottom_sheet/add_bottom_sheet.dart';
+import 'package:todo_sat_c9/ui/screens/home/tabs/list_tab.dart';
+import 'package:todo_sat_c9/ui/screens/home/tabs/settings.dart';
 import 'package:todo_sat_c9/ui/screens/home/todo_widget.dart';
 import 'package:todo_sat_c9/ui/utils/app_colors.dart';
 
@@ -12,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int currentTabIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,49 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget body() => Stack(
-    children: [
-      Column(
-        children: [
-          Expanded(
-            flex: 17,
-              child: Container(
-            color: AppColors.primiary,
-          )),
-          Expanded(
-              flex: 83,
-              child: Container(
-            color: AppColors.accent,
-          ))
-        ],
-      ),
-      Column(
-        children: [
-          SizedBox(height: 20,),
-          buildAppBar(),
-          CalendarTimeline(
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now().subtract(Duration(days: 365)),
-            lastDate: DateTime.now().add(Duration(days: 365)),
-            onDateSelected: (date) => print(date),
-            leftMargin: 20,
-            monthColor: Colors.black,
-            dayColor: Colors.black,
-            activeDayColor: AppColors.primiary,
-            activeBackgroundDayColor: AppColors.white,
-            dotsColor: AppColors.transparent,
-            locale: 'en_ISO',
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (_, index) => TodoWidget(),
-            ),
-          ),
-        ],
-      ),
-    ],
-  );
+  Widget body() => currentTabIndex == 0 ? ListTab() : SettingsTab();
 
   Widget buildFab() =>
       FloatingActionButton(
@@ -87,6 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
         notchMargin: 8,
         clipBehavior: Clip.hardEdge,
         child: BottomNavigationBar(
+          onTap: (index){
+            currentTabIndex = index;
+            setState(() {});
+          },
+          currentIndex: currentTabIndex,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.menu), label: ""),
             BottomNavigationBarItem(icon: Icon(Icons.settings), label: ""),

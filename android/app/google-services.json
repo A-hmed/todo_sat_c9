@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "595408067422",
+    "project_id": "todo-app--sat",
+    "storage_bucket": "todo-app--sat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595408067422:android:1745ed5a01b7824a9a8dcf",
+        "android_client_info": {
+          "package_name": "com.example.todo_sat_c9"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACyYy7wq618vLebNgebLVUfWGC3FDDZV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
