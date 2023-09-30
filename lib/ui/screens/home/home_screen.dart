@@ -1,5 +1,6 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_sat_c9/model/app_user.dart';
 import 'package:todo_sat_c9/ui/bottom_sheets/add_bottom_sheet/add_bottom_sheet.dart';
 import 'package:todo_sat_c9/ui/screens/home/tabs/list_tab.dart';
 import 'package:todo_sat_c9/ui/screens/home/tabs/settings.dart';
@@ -63,6 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
   PreferredSizeWidget buildAppBar() =>
       AppBar(
         backgroundColor: Colors.transparent,
-        title: Text("To Do List"),
+        title: Text("Welcome ${AppUser.currentUser!.userName}"),
       );
 }

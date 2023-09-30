@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_sat_c9/model/app_user.dart';
 import 'package:todo_sat_c9/model/todo_dm.dart';
 import 'package:todo_sat_c9/providers/list_provider.dart';
 import 'package:todo_sat_c9/ui/utils/app_colors.dart';
@@ -75,21 +76,21 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
     );
   }
 
-  void addTodoToFirestore() {
+  void addTodoToFirestore() async {
     CollectionReference todosRef =
-        FirebaseFirestore.instance.collection(TodoDM.collectionName);
+        AppUser.getCollection().doc(AppUser.currentUser!.id).
+        collection(TodoDM.collectionName);
 
     DocumentReference docRef = todosRef.doc();
-    docRef.set({
+    await docRef.set({
       "id": docRef.id,
       "title": titleController.text,
       "description": descriptionController.text,
       "date": selectedDay,
       "isDone": false
-    }).timeout(Duration(milliseconds: 300), onTimeout: () {
+    });
       provider.getTodosFromFirestore();
       Navigator.pop(context);
-    });
   }
 
   void showMyDatePicker() async {

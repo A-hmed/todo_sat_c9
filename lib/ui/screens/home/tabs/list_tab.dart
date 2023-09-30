@@ -1,9 +1,9 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_sat_c9/model/todo_dm.dart';
+import 'package:todo_sat_c9/model/app_user.dart';
 import 'package:todo_sat_c9/providers/list_provider.dart';
+import 'package:todo_sat_c9/ui/screens/auth/login/login.dart';
 import 'package:todo_sat_c9/ui/screens/home/todo_widget.dart';
 import 'package:todo_sat_c9/ui/utils/app_colors.dart';
 
@@ -21,12 +21,11 @@ class _ListTabState extends State<ListTab> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       provider.getTodosFromFirestore();
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-   provider = Provider.of(context);
+    provider = Provider.of(context);
     return Stack(
       children: [
         Column(
@@ -45,13 +44,15 @@ class _ListTabState extends State<ListTab> {
         ),
         Column(
           children: [
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             buildAppBar(),
             CalendarTimeline(
               initialDate: provider.selectedDay,
               firstDate: DateTime.now().subtract(Duration(days: 365)),
               lastDate: DateTime.now().add(Duration(days: 365)),
-              onDateSelected: (date){
+              onDateSelected: (date) {
                 provider.selectedDay = date;
                 provider.getTodosFromFirestore();
               },
@@ -75,11 +76,17 @@ class _ListTabState extends State<ListTab> {
     );
   }
 
-
-
-  PreferredSizeWidget buildAppBar() =>
-      AppBar(
+  PreferredSizeWidget buildAppBar() => AppBar(
         backgroundColor: Colors.transparent,
-        title: Text("To Do List"),
+        title: Text("Welcome ${AppUser.currentUser!.userName}"),
+        actions: [
+          InkWell(
+              onTap: () {
+                AppUser.currentUser = null;
+                provider.todos.clear();
+                Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+              },
+              child: Icon(Icons.logout))
+        ],
       );
 }

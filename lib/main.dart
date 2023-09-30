@@ -14,7 +14,6 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseFirestore.instance.settings =
       const Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
- // await FirebaseFirestore.instance.disableNetwork();
 
   runApp(ChangeNotifierProvider(
       create: (_){
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (_) => LoginScreen(),
         RegisterScreen.routeName: (_) => RegisterScreen()
       },
-      initialRoute: HomeScreen.routeName,
+      initialRoute: LoginScreen.routeName,
     );
   }
 }
